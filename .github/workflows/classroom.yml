@@ -27,14 +27,24 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: test 2
-        setup-command: pipm install -r requirements.txt
+        setup-command: pip install -r requirements.txt
         command: pytest test_feature_engineering.py
         timeout: 10
         max-score: 10
+    - name: test 3
+      id: test-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test 3
+        setup-command: pip install -r requirements.txt
+        command: pytest test_model_training.py
+        timeout: 10
+        max-score: 40
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST-1_RESULTS: "${{steps.test-1.outputs.result}}"
         TEST-2_RESULTS: "${{steps.test-2.outputs.result}}"
+        TEST-3_RESULTS: "${{steps.test-3.outputs.result}}"
       with:
-        runners: test-1,test-2
+        runners: test-1,test-2,test-3
